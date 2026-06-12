@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Campeões do Campeonato</title>
+<link rel="shortcut icon" href="logo.png" type="32x32">
 
 <style>
     body{
@@ -16,14 +17,6 @@
     h1{
         text-align: center;
         color: gold;
-    }
-
-    .container{
-        max-width: 900px;
-        margin: auto;
-        background: #111827;
-        padding: 20px;
-        border-radius: 10px;
     }
 
     table{
@@ -43,111 +36,101 @@
         color: gold;
     }
 
-    button{
-        padding: 6px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 2px;
-    }
-
-    .delete{
-        background: red;
-        color: white;
-    }
-
-    .admin-box{
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    input{
-        padding: 8px;
-        border-radius: 5px;
-        border: none;
-    }
-
-    .add{
-        background: green;
-        color: white;
-    }
-
-    .login{
-        background: #2563eb;
-        color: white;
-    }
-
-    .logout{
-        background: #f97316;
-        color: white;
-    }
-
-    .hidden{
-        display: none;
-    }
-
-    .badge{
-        background: gold;
-        color: black;
-        padding: 4px 8px;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
     .section-title{
         margin-top: 30px;
         color: #38bdf8;
         text-align: center;
     }
-</style>
 
+    img{
+        height: 200px;
+    }
+
+    div{
+        display: flex;
+        justify-content: center;
+    }
+
+    /* NOVO */
+    .ultima-edicao{
+        text-align: center;
+        margin-top: 40px;
+        font-size: 16px;
+        color: #a5b4fc;
+        font-weight: bold;
+    }
+</style>
 </head>
 
-<body>
+<body onload="mostrarUltimaEdicao()">
+
+<div>
+    <img src="logo.png" alt="Logo">
+</div>
 
 <h1>🏆 Campeões do Campeonato</h1>
 
-    <!-- TABELA PRINCIPAL -->
-    <table>
-        <thead>
-            <tr>
-                <th>Posição</th>
-                <th>Campeão</th>
-                <th>Ano</th>
-            </tr>
-            <tr>
-    <td>1</td>
-    <td>-</td>
-    <td>2026</td>
-</tr>
+<!-- TABELA PRINCIPAL -->
+<table>
+    <thead>
+        <tr>
+            <th>Posição</th>
+            <th>Campeão</th>
+            <th>Ano</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>-</td>
+            <td>2026</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-        </thead>
-        <tbody id="tabela"></tbody>
-    </table>
+<h2 class="section-title">📊 Ranking de Títulos</h2>
 
-    <h2 class="section-title">📊 Ranking de Títulos</h2>
+<!-- TABELA RANKING -->
+<table>
+    <thead>
+        <tr>
+            <th>Posição</th>
+            <th>Campeão</th>
+            <th>Títulos</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-    <!-- TABELA DE RANKING -->
-    <table>
-        <thead>
-            <tr>
-                <th>Posição</th>
-                <th>Campeão</th>
-                <th>Títulos</th>
-            </tr>
-            <tr>
-    <td>1</td>
-    <td>-</td>
-    <td>-</td>
-</tr>
-        </thead>
-        <tbody id="ranking"></tbody>
-    </table>
-
+<!-- NOVO BLOCO -->
+<div class="ultima-edicao" id="ultimaEdicao">
+    Última edição: carregando...
 </div>
 
+<script>
+function mostrarUltimaEdicao() {
+    let ultima = localStorage.getItem("ultimaEdicao");
+
+    // se nunca foi salvo, usa data do arquivo
+    if (!ultima) {
+        ultima = document.lastModified;
+        localStorage.setItem("ultimaEdicao", ultima);
+    }
+
+    document.getElementById("ultimaEdicao").innerText =
+        "Última edição: " + ultima;
+}
+
+// função para atualizar quando você quiser (futuras alterações)
+function atualizarEdicao() {
+    const agora = new Date().toLocaleString("pt-BR");
+    localStorage.setItem("ultimaEdicao", agora);
+}
+</script>
 
 </body>
 </html>

@@ -10,7 +10,7 @@
         background: #0f172a;
         color: white;
         margin: 0;
-        padding: 20px;
+        padding: 200px;
     }
 
     h1{
@@ -41,10 +41,6 @@
     th{
         background: #1f2937;
         color: gold;
-    }
-
-    tr:hover{
-        background: #1e293b;
     }
 
     button{
@@ -113,20 +109,6 @@
 
 <h1>🏆 Campeões do Campeonato</h1>
 
-<div class="container">
-
-    <button class="login" onclick="loginAdmin()">Entrar como Admin</button>
-
-    <div id="adminPanel" class="admin-box hidden">
-
-        <input type="text" id="nomeCampeao" placeholder="Nome do campeão">
-        <input type="number" id="anoCampeao" placeholder="Ano (ex: 2026)">
-
-        <button class="add" onclick="addCampeao()">Adicionar</button>
-        <button class="logout" onclick="sairAdmin()">Sair do admin</button>
-
-    </div>
-
     <!-- TABELA PRINCIPAL -->
     <table>
         <thead>
@@ -134,8 +116,13 @@
                 <th>Posição</th>
                 <th>Campeão</th>
                 <th>Ano</th>
-                <th>Ação</th>
             </tr>
+            <tr>
+    <td>1</td>
+    <td>-</td>
+    <td>2026</td>
+</tr>
+
         </thead>
         <tbody id="tabela"></tbody>
     </table>
@@ -150,135 +137,17 @@
                 <th>Campeão</th>
                 <th>Títulos</th>
             </tr>
+            <tr>
+    <td>1</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
         </thead>
         <tbody id="ranking"></tbody>
     </table>
 
 </div>
 
-<script>
-
-const senhaAdmin = "074708";
-let adminAtivo = false;
-
-// carregar tudo
-function carregar(){
-    let dados = JSON.parse(localStorage.getItem("campeoes")) || [];
-
-    // ordenar por ano
-    dados.sort((a,b)=> b.ano - a.ano);
-
-    carregarTabelaPrincipal(dados);
-    carregarRanking(dados);
-}
-
-// tabela principal
-function carregarTabelaPrincipal(dados){
-    let tabela = document.getElementById("tabela");
-    tabela.innerHTML = "";
-
-    dados.forEach((c, index)=>{
-        tabela.innerHTML += `
-        <tr>
-            <td><span class="badge">${index+1}</span></td>
-            <td>${c.nome}</td>
-            <td>${c.ano}</td>
-            <td>
-                ${adminAtivo ? `<button class="delete" onclick="deletar(${index})">Excluir</button>` : "-"}
-            </td>
-        </tr>
-        `;
-    });
-}
-
-// ranking de títulos
-function carregarRanking(dados){
-    let ranking = document.getElementById("ranking");
-    ranking.innerHTML = "";
-
-    let contagem = {};
-
-    dados.forEach(c=>{
-        if(contagem[c.nome]){
-            contagem[c.nome]++;
-        } else {
-            contagem[c.nome] = 1;
-        }
-    });
-
-    let lista = Object.entries(contagem);
-
-    lista.sort((a,b)=> b[1] - a[1]);
-
-    lista.forEach((item, index)=>{
-        ranking.innerHTML += `
-        <tr>
-            <td><span class="badge">${index+1}</span></td>
-            <td>${item[0]}</td>
-            <td>${item[1]}</td>
-        </tr>
-        `;
-    });
-}
-
-// adicionar campeão
-function addCampeao(){
-    let nome = document.getElementById("nomeCampeao").value;
-    let ano = document.getElementById("anoCampeao").value;
-
-    if(!nome || !ano){
-        alert("Preencha todos os campos!");
-        return;
-    }
-
-    let dados = JSON.parse(localStorage.getItem("campeoes")) || [];
-
-    dados.push({
-        nome: nome,
-        ano: parseInt(ano)
-    });
-
-    localStorage.setItem("campeoes", JSON.stringify(dados));
-
-    document.getElementById("nomeCampeao").value = "";
-    document.getElementById("anoCampeao").value = "";
-
-    carregar();
-}
-
-// excluir
-function deletar(index){
-    let dados = JSON.parse(localStorage.getItem("campeoes")) || [];
-    dados.splice(index,1);
-    localStorage.setItem("campeoes", JSON.stringify(dados));
-    carregar();
-}
-
-// login admin
-function loginAdmin(){
-    let senha = prompt("Digite a senha de administrador:");
-
-    if(senha === senhaAdmin){
-        adminAtivo = true;
-        document.getElementById("adminPanel").classList.remove("hidden");
-        alert("Modo administrador ativado!");
-        carregar();
-    } else {
-        alert("Senha incorreta!");
-    }
-}
-
-// sair admin
-function sairAdmin(){
-    adminAtivo = false;
-    document.getElementById("adminPanel").classList.add("hidden");
-    alert("Você saiu do modo administrador!");
-    carregar();
-}
-
-carregar();
-
-</script>
 
 </body>
 </html>

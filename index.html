@@ -107,30 +107,9 @@
 </table>
 
 <!-- NOVO BLOCO -->
-<div class="ultima-edicao" id="ultimaEdicao">
-    Última edição: carregando...
+<div class="ultima-edicao">
+    Última edição: 15/06/2026 às 22:09
 </div>
-
-<script>
-function mostrarUltimaEdicao() {
-    let ultima = localStorage.getItem("ultimaEdicao");
-
-    // se nunca foi salvo, usa data do arquivo
-    if (!ultima) {
-        ultima = document.lastModified;
-        localStorage.setItem("ultimaEdicao", ultima);
-    }
-
-    document.getElementById("ultimaEdicao").innerText =
-        "Última edição: " + ultima;
-}
-
-// função para atualizar quando você quiser (futuras alterações)
-function atualizarEdicao() {
-    const agora = new Date().toLocaleString("pt-BR");
-    localStorage.setItem("ultimaEdicao", agora);
-}
-</script>
 
 </body>
 </html>
